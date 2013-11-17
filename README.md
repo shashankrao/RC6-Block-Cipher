@@ -5,7 +5,7 @@ Implementation of RC6 encryption and decryption  in python.
 
 ## Specification
 
-* Block size : 128bit
+* Block size : 4*32 bit blocks
 
 * Key size : 128bit
 
