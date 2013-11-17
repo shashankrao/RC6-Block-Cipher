@@ -128,8 +128,8 @@ def decrypt(sentence,s):
         t = ROL(t_temp,lgw,32)
         tmod=t%32
         umod=u%32
-        C = (ROR((C-s[2*i+1])%modulo,tmod,32)  ^u)%modulo  
-        A = (ROR((C-s[2*i])%modulo,umod,32)   ^t) %modulo
+        C = (ROR((C-s[2*i+1])%modulo,tmod,32)  ^u)  
+        A = (ROR((A-s[2*i])%modulo,umod,32)   ^t) 
     D = (D - s[1])%modulo 
     B = (B - s[0])%modulo
     orgi = []
