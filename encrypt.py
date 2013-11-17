@@ -22,11 +22,22 @@ def blockConverter(sentence):
     encoded.append(res)
     return encoded
 
+def deBlocker(binary):
+    s = ""
+    for ele in binary:
+        temp =bin(ele)[2:]
+        if len(temp) <32:
+            temp = "0"*(32-len(temp)) + temp
+        for i in range(0,4):
+            s=s+chr(int(temp[i*8:(i+1)*8],2))
+    return s
+    
+
 def getBlocksBinary(sentence):
     return blockConverter(sentence)
 
 def generateKey(userkey):
-    r=10
+    r=12
     w=32
     b=len(userkey)
     modulo = 2**32
@@ -35,7 +46,7 @@ def generateKey(userkey):
     for i in range(1,2*r+4):
         s[i]=(s[i-1]+0x9E3779B9)%(2**w)
     encoded = getBlocksBinary(userkey)
-    print encoded
+    #print encoded
     enlength = len(encoded)
     l = enlength*[0]
     for i in range(1,enlength+1):
@@ -64,8 +75,13 @@ def encrypt(sentence,s):
     orgi.append(B)
     orgi.append(C)
     orgi.append(D)
-    print "Orginal String List", orgi
-    r=10
+#    print "Orginal String List", orgi
+
+    print "Original String list: ",orgi
+    print "Original String: " + deBlocker(orgi)
+
+
+    r=12
     w=32
     modulo = 2**32
     lgw = 5
@@ -93,10 +109,15 @@ def encrypt(sentence,s):
     cipher.append(B)
     cipher.append(C)
     cipher.append(D)
-    return cipher
+    return cipher
+
 
 
 s = generateKey('A WORD IS A WORD')
 sentence = 'I WORD IS A WORD'
 cipher = encrypt(sentence,s)
-print "Encrypted String List ",cipher
+print "Length of Original String: ",len(sentence)
+print "\nEncrypted String list: ",cipher
+esentence = deBlocker(cipher)
+print "Encrypted String: " + esentence
+print "Length of Encrypted String: ",len(esentence)
